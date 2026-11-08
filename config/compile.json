@@ -1,0 +1,16 @@
+{
+    "standalone": [
+        "svision/js/platform/canvas2D/vga/vgaVideoRAM.js",
+        "svision/js/platform/canvas2D/vga/vgaPalette.js",
+        "pop/popRandom.js",
+        "pop/tileTable.js",
+        "pop/chtab.js",
+        "pop/levelData.js",
+        "pop/roomRenderer.js",
+        "pop/sequences.js",
+        "pop/frames.js",
+        "pop/sounds.js",
+        "pop/prince.js",
+        "gameWorker.js"
+    ]
+}
