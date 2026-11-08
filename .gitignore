@@ -17,3 +17,8 @@ CLAUDE.md
 MILNIKY.md
 ZADANI.md
 *.log
+
+# data/ is decoded out of the operator's original by tools/dumpdat.mjs - derived
+# from copyrighted data, regenerated on each machine, never committed (as in doom)
+data/*
+!data/README.md
