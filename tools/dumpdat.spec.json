@@ -1,0 +1,265 @@
+{
+ "note": "Prince of Persia, DOS 1.0. Which resource of which DAT is what, as the game loads them (SDLPoP seg000.c load_*; resource ids and palette rows from the load_chtab_from_file / load_sprites_from_file calls). Paths relative to this spec. Palette row r = the chtab's 16 colours land in VGA registers r*16..r*16+15 and its pixels are written as r*16+colour.",
+ "originalDir": "../assets/original",
+ "dataDir": "../data",
+ "notDAT": [
+  "POPCHT.DAT"
+ ],
+ "graphics": {
+  "sword": {
+   "file": "PRINCE.DAT",
+   "resource": 700,
+   "paletteRow": 2,
+   "note": "sword in the hand (chtab 0)"
+  },
+  "flameSwordPotion": {
+   "file": "PRINCE.DAT",
+   "resource": 150,
+   "paletteRow": 3,
+   "note": "flames 1-9, sword on the floor 10-11, potions 12-15, bubbles 16-22, bubble mask 23 (chtab 1)"
+  },
+  "kid": {
+   "file": "KID.DAT",
+   "resource": 400,
+   "paletteRow": 7,
+   "note": "the prince (chtab 2)"
+  },
+  "guard": {
+   "file": "GUARD.DAT",
+   "resource": 750,
+   "paletteRow": 8,
+   "paletteFiles": {
+    "dungeon": "GUARD2.DAT",
+    "palace": "GUARD1.DAT"
+   },
+   "note": "GUARD.DAT has no palette resource; the game opens GUARD2.DAT (dungeon) or GUARD1.DAT (palace) underneath it for resource 750, and recolours the set per guard from guardPalettes (chtab 5)"
+  },
+  "fat": {
+   "file": "FAT.DAT",
+   "resource": 750,
+   "paletteRow": 8,
+   "note": "level 6 guard"
+  },
+  "skel": {
+   "file": "SKEL.DAT",
+   "resource": 750,
+   "paletteRow": 8,
+   "note": "level 3 skeleton"
+  },
+  "vizier": {
+   "file": "VIZIER.DAT",
+   "resource": 750,
+   "paletteRow": 8,
+   "note": "level 13 Jaffar"
+  },
+  "shadow": {
+   "file": "SHADOW.DAT",
+   "resource": 750,
+   "paletteRow": 8,
+   "note": "level 12 shadow"
+  },
+  "dungeon": {
+   "file": "VDUNGEON.DAT",
+   "resource": 200,
+   "paletteRow": 5,
+   "optional": 1200,
+   "note": "dungeon tiles (chtab 6); optional graphics 1200+n replace image n (load_more_opt_graf)"
+  },
+  "dungeonWall": {
+   "file": "VDUNGEON.DAT",
+   "resource": 360,
+   "paletteRow": 6,
+   "note": "dungeon wall pieces (chtab 7)"
+  },
+  "palace": {
+   "file": "VPALACE.DAT",
+   "resource": 200,
+   "paletteRow": 5,
+   "optional": 1200,
+   "note": "palace tiles (chtab 6)"
+  },
+  "palaceWall": {
+   "file": "VPALACE.DAT",
+   "resource": 360,
+   "paletteRow": 6,
+   "note": "palace wall pieces (chtab 7)"
+  },
+  "titleFrame": {
+   "file": "TITLE.DAT",
+   "resource": 40,
+   "paletteRow": 11,
+   "note": "story frame and texts; colour 14 is set by the game (dark blue / dark red)"
+  },
+  "titlePictures": {
+   "file": "TITLE.DAT",
+   "resource": 50,
+   "paletteRow": 12,
+   "note": "title screen, 'presents', 'a game by', logo, 'Jordan Mechner'"
+  },
+  "princessInStory": {
+   "file": "PV.DAT",
+   "resource": 800,
+   "paletteRow": 9,
+   "note": "chtab 3"
+  },
+  "vizierInStory": {
+   "file": "PV.DAT",
+   "resource": 850,
+   "paletteRow": 10,
+   "note": "chtab 4 with which_imgs 0"
+  },
+  "princessInCutscenes": {
+   "file": "PV.DAT",
+   "resource": 900,
+   "paletteRow": 10,
+   "note": "chtab 4 with which_imgs 1"
+  },
+  "princessRoom": {
+   "file": "PV.DAT",
+   "resource": 950,
+   "paletteRow": 13,
+   "note": "chtab 8, image 1 is the whole room background"
+  },
+  "princessBed": {
+   "file": "PV.DAT",
+   "resource": 980,
+   "paletteRow": 14,
+   "note": "chtab 9"
+  }
+ },
+ "levels": {
+  "file": "LEVELS.DAT",
+  "first": 2000,
+  "count": 16,
+  "note": "level n is resource 2000+n; 0 demo, 1-13 the game, 14 the vizier, 15 copy protection"
+ },
+ "sounds": {
+  "files": [
+   "DIGISND1.DAT",
+   "DIGISND2.DAT",
+   "DIGISND3.DAT",
+   "IBM_SND1.DAT",
+   "IBM_SND2.DAT",
+   "MIDISND1.DAT",
+   "MIDISND2.DAT"
+  ],
+  "instruments": {
+   "file": "PRINCE.DAT",
+   "resource": 1,
+   "note": "the AdLib instrument table the MIDI driver plays through: a count byte and then 16 bytes an instrument (blockLow, blockHigh, feedback/connection, 2x {multiple, level, attackDecay, sustainRelease, waveform}, percussion, 2 unused) — SDLPoP midi.c init_midi, types.h instrument_type. MIDI channel n starts on instrument n, a program change moves it."
+  },
+  "first": 10000,
+  "digiLayout": "1.0",
+  "note": "digiLayout: the digitised header of 1.0/1.1 (rate, count, unknown, sampleSize) vs 1.3/1.4 (rate, sampleSize, count, unknown, unknown2); sound n is resource 10000+n in every sound DAT; the game opens IBM_SND (speaker), DIGISND (digitised) and MIDISND (AdLib) and takes the first that has it. Names are ours, after doc/internals_sounds.csv of SDLPoP.",
+  "names": [
+   "hard-land",
+   "falling",
+   "loose-floor-breaks",
+   "button",
+   "gate-closing",
+   "gate-opening",
+   "gate-closing-fast",
+   "gate-stop",
+   "bump-wall",
+   "grab-ledge",
+   "sword-vs-sword",
+   "sword-swing",
+   "guard-hurt",
+   "kid-hurt",
+   "level-door-slam",
+   "level-door-sliding",
+   "medium-land",
+   "soft-land",
+   "drink",
+   "draw-sword",
+   "loose-floor-shake-1",
+   "loose-floor-shake-2",
+   "loose-floor-shake-3",
+   "footstep",
+   "death",
+   "presentation",
+   "princess-reached",
+   "cutscene-2-4-6-12",
+   "death-in-fight",
+   "meet-jaffar",
+   "big-potion",
+   "unused-31",
+   "shadow-level-end",
+   "small-potion",
+   "unused-34",
+   "cutscene-8-9",
+   "time-over",
+   "get-sword-guard-death",
+   "button-blink",
+   "slow-fall",
+   "cutscene-12-short",
+   "shadow-united",
+   "unused-42",
+   "jaffar-death",
+   "skeleton-alive",
+   "mirror-jump",
+   "chomped",
+   "chomper",
+   "spiked",
+   "spikes",
+   "story-princess-waiting",
+   "princess-door",
+   "story-jaffar-leaves",
+   "story-jaffar-comes",
+   "main-theme",
+   "story-absence",
+   "winning-theme"
+  ]
+ },
+ "tables": {
+  "guardPalettes": {
+   "file": "PRINCE.DAT",
+   "resource": 10,
+   "note": "7 guard colours x 16 VGA colours x rgb (6-bit); colour c of a guard = bytes 48*(c-1).. (seg003.c set_chtab_palette)"
+  }
+ },
+ "unknown": {
+  "file": "PRINCE.DAT",
+  "resources": [
+   2
+  ],
+  "note": "not referenced by SDLPoP; kept as base64 until identified. Resource 1 was here too until it was identified as the AdLib instrument table (sounds.instruments)"
+ },
+ "exe": {
+  "file": "PRINCE.EXE",
+  "note": "Program data of the executable the game logic runs on: the animation sequences and the frame tables. Found by their first bytes (SDLPoP seqtbl.c / seg006.c give the content); 'entries' x 'stride' bytes follow. seqOffsets sit at data:1888 of the data segment whose base is where the sequence table (data:196E) was found.",
+  "tables": {
+   "seqtbl": {
+    "pattern": "f901ff8119f9010102",
+    "length": 2282,
+    "base": 6510
+   },
+   "seqOffsets": {
+    "dataOffset": 6280,
+    "entries": 115,
+    "stride": 2,
+    "note": "word per SEQ id; entry 0 is unused (0xB000 in the file)"
+   },
+   "frameKid": {
+    "pattern": "ff0000000000000100c4",
+    "entries": 241,
+    "stride": 5
+   },
+   "frameGuard": {
+    "pattern": "ff000000000ccd020100",
+    "entries": 41,
+    "stride": 5
+   },
+   "frameCuts": {
+    "pattern": "ff000000000f40000000",
+    "entries": 86,
+    "stride": 5
+   },
+   "swords": {
+    "pattern": "ff00000000f705f7e3",
+    "entries": 51,
+    "stride": 3
+   }
+  }
+ }
+}

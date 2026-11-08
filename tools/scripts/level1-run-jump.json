@@ -1,0 +1,6 @@
+{
+ "note": "level 1: the prince drops in, stands up, runs right along the start room, jumps over the gap, keeps running into the next room and stops. A smoke test of the physics (tracephysics.mjs) and the first testFlight-shaped script (R-009).",
+ "level": 1,
+ "seed": 49374,
+ "inputs": ["36", "R24", "RU1", "R30", "L2", "20"]
+}

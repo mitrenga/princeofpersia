@@ -1,0 +1,1 @@
+{"note": "level 1: the prince drops to the bottom row of the start room, runs right and stops on the loose floor; it shakes, gives way and he falls with it two rows into the room below (-1 hp). The floor lands as debris. P4: loose floors, mobs, do_knock.", "level": 1, "seed": 49374, "inputs": ["36", "R12", "RU1", "R28", "40"]}

@@ -1,0 +1,54 @@
+--- src/seg003.c	2026-09-14 15:21:23.652887359 +0200
++++ src/seg003.c	2026-09-14 15:21:23.668887736 +0200
+@@ -371,6 +371,36 @@
+ 		timers();
+ 		play_frame();
+ 
++		// princeofpersia remake: the golden record of the prince's physics
++		// and of the tile mechanisms (tools/matchphysics.mjs). One JSON line
++		// per game frame when the environment variable POP_TRACE names a file.
++		{
++			static FILE* pop_trace_fp = NULL;
++			static int pop_trace_checked = 0;
++			if (!pop_trace_checked) {
++				pop_trace_checked = 1;
++				const char* pop_trace_name = getenv("POP_TRACE");
++				if (pop_trace_name != NULL) pop_trace_fp = fopen(pop_trace_name, "w");
++			}
++			if (pop_trace_fp != NULL) {
++				int pop_t;
++				fprintf(pop_trace_fp,
++					"{\"x\":%d,\"y\":%d,\"shift\":%d,\"kid\":{\"level\":%d,\"room\":%d,\"x\":%d,\"y\":%d,\"frame\":%d,\"row\":%d,\"col\":%d,\"direction\":%d,\"action\":%d,\"seq\":%d,\"hp\":%d,\"drawnRoom\":%d,\"min\":%d,\"tick\":%d,\"trobs\":%d,\"mobs\":%d,\"door\":%d,\"tiles\":[",
++					(int)control_x, (int)control_y, control_shift == CONTROL_HELD ? 1 : 0,
++					(int)current_level, (int)Kid.room, (int)Kid.x, (int)Kid.y, (int)Kid.frame, (int)Kid.curr_row, (int)Kid.curr_col,
++					(int)Kid.direction, (int)Kid.action, (int)Kid.curr_seq, (int)hitp_curr, (int)drawn_room,
++					(int)rem_min, (int)rem_tick, (int)trobs_count, (int)mobs_count, (int)leveldoor_open);
++				// the tile types and modifiers of the prince's room (30 zeros for room 0)
++				for (pop_t = 0; pop_t < 30; ++pop_t)
++					fprintf(pop_trace_fp, "%s%d", pop_t ? "," : "", Kid.room ? level.fg[(Kid.room - 1) * 30 + pop_t] & 0x1F : 0);
++				fprintf(pop_trace_fp, "],\"mods\":[");
++				for (pop_t = 0; pop_t < 30; ++pop_t)
++					fprintf(pop_trace_fp, "%s%d", pop_t ? "," : "", Kid.room ? level.bg[(Kid.room - 1) * 30 + pop_t] : 0);
++				fprintf(pop_trace_fp, "]}}\n");
++				fflush(pop_trace_fp);
++			}
++		}
++
+ #ifdef USE_REPLAY
+ 		// At the exact "end of level" frame, preserve the seed to ensure reproducibility,
+ 		// regardless of how long the sound is still playing *after* this frame (torch animation modifies the seed!)
+--- src/seg009.c	2026-09-14 15:21:23.652887359 +0200
++++ src/seg009.c	2026-09-14 15:21:23.668887736 +0200
+@@ -2476,6 +2476,12 @@
+ 
+ // seg009:7299
+ int check_sound_playing() {
++	// princeofpersia remake: with POP_TRACE_SILENT set the game behaves as
++	// if no sound ever played (the remake has no sound before P6; the
++	// level 1 crouch waits for the presentation music otherwise)
++	static int pop_trace_silent = -1;
++	if (pop_trace_silent < 0) pop_trace_silent = getenv("POP_TRACE_SILENT") != NULL;
++	if (pop_trace_silent) return 0;
+ 	return speaker_playing || digi_playing || midi_playing || ogg_playing;
+ }
+ 
